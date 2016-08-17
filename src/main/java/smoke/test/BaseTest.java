@@ -32,10 +32,6 @@ public class BaseTest {
         return dataForScreenshot;
     }
 
-    @Before
-    public void openPage() {
-        open("https://google.com/ncr");
-    }
 
 }
 
