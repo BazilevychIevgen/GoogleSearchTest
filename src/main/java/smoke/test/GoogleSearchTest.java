@@ -16,7 +16,7 @@ public class GoogleSearchTest {
     @Test
     public void testSearch() {
 
-        add("“Selenium automates browsers”");
+        search("“Selenium automates browsers”");
 
         assertResultsListed(10);
     }
@@ -24,7 +24,7 @@ public class GoogleSearchTest {
     ElementsCollection searchResults = $$("#lst-ib");
 
     @Step
-    private void add(String... taskTexts) {
+    private void search(String... taskTexts) {
         for (String text : taskTexts) {
             $("#lst-ib").setValue(text).pressEnter();
         }
