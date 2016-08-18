@@ -8,12 +8,15 @@ import org.junit.Test;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import static com.codeborne.selenide.CollectionCondition.size;
+import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byName;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.url;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by barocko on 8/17/2016.
@@ -21,17 +24,18 @@ import static com.codeborne.selenide.WebDriverRunner.url;
 public class GoogleSearchTest extends BaseTest {
 
     @Test
-    public void testSearch() {
+    public void testSearchAndFollowLink() {
 
         openPage();
 
         search("“Selenium automates browsers”");
 
-        assertResultsCount(10);
+        assertResultsCount(0,"Selenium automates browsers");
 
         followLink(0);
 
-        pageIsDownloaded();
+        $("h2").shouldHave(text("What is Selenium?"));
+        assertEquals("http://www.seleniumhq.org/", url());
     }
 
     ElementsCollection results = $$(".srg>.g");
@@ -41,17 +45,12 @@ public class GoogleSearchTest extends BaseTest {
         $(byName("q")).setValue(text).pressEnter();
     }
 
-    public void assertResultsCount(int count) {
-        results.shouldHave(size(count));
+    public void assertResultsCount(int index,String texts) {
+        results.get(index).shouldHave(text(texts));
     }
 
     public void followLink(int index) {
         results.get(index).find("h3>a").click();
-    }
-
-    public void pageIsDownloaded() {
-        $("#editPage>a").shouldBe(visible);
-        Assert.assertEquals("http://www.seleniumhq.org/", url());
     }
 
     public static void openPage() {

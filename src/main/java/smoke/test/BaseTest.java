@@ -22,15 +22,13 @@ public class BaseTest {
 
     @After
     public void tearDown() throws IOException {
-        File lastSelenideScreenshot = Screenshots.getLastScreenshot();
-        if (lastSelenideScreenshot != null) {
-            screenshot(Files.toByteArray(lastSelenideScreenshot));
-        }
+        screenshot();
     }
 
     @Attachment(type = "image/png")
-    public static byte[] screenshot(byte[] dataForScreenshot) {
-        return dataForScreenshot;
+    public byte[] screenshot() throws IOException {
+        File screenshot = Screenshots.takeScreenShotAsFile();
+        return Files.toByteArray(screenshot);
     }
 
 }
