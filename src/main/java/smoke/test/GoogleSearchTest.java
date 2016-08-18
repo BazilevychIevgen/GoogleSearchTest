@@ -30,7 +30,7 @@ public class GoogleSearchTest extends BaseTest {
 
         search("“Selenium automates browsers”");
 
-        assertResultsCount(0,"Selenium automates browsers");
+        assertResultHave(0,"Selenium automates browsers");
 
         followLink(0);
 
@@ -45,7 +45,7 @@ public class GoogleSearchTest extends BaseTest {
         $(byName("q")).setValue(text).pressEnter();
     }
 
-    public void assertResultsCount(int index,String texts) {
+    public void assertResultHave(int index,String texts) {
         results.get(index).shouldHave(text(texts));
     }
 
